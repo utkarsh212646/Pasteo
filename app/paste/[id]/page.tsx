@@ -23,7 +23,7 @@ SyntaxHighlighter.registerLanguage('csharp', csharp)
 SyntaxHighlighter.registerLanguage('cpp', cpp)
 
 export default function PasteView() {
-  const { id } = useParams()
+  const { id } = useParams() as { id: string }  // Type assertion for `id`
   const [paste, setPaste] = useState({ content: '', language: 'plaintext', createdAt: new Date() })
   const [error, setError] = useState('')
   const { theme } = useTheme()
@@ -42,7 +42,9 @@ export default function PasteView() {
       }
     }
 
-    fetchPaste()
+    if (id) {
+      fetchPaste()
+    }
   }, [id])
 
   const copyToClipboard = () => {
